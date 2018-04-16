@@ -1,42 +1,45 @@
-GHOSTZ
-======
+# GHOSTZ
 
 GHOSTZ is a homology search tool which can detect remote homologues like BLAST and is about 200 times more efficient than BLAST by using database subsequence clustering. GHOSTZ outputs search results in the format similar to BLAST-tabular format.
 
-Requirements
-------------
+
+## Requirements
 gcc >4.3
 
-Installation
-------------
 
-Download the archive of GHOSTZ from the above link.
-Extract the archive and cd into the extracted directory.
+## Installation
+Download the archive of GHOSTZ from the above link. 
+Extract the archive and cd into the extracted directory. 
 Run make command.
-Copy 'ghostz' file to any directory you like.
-      $ tar xvzf ghostz.tar.gz
-      $ cd ghostz
-      $ make
-      $ cp ghostz /AS/YOU/LIKE/
+
+```sh
+# Copy 'ghostz' file to any directory you like.
+$ tar xvzf ghostz.tar.gz
+$ cd ghostz
+$ make
+$ cp ghostz /AS/YOU/LIKE/
+```
     
-Usage
------
+## Usage
 
 GHOSTZ requires specifically formatted database files for homology search. These files can be generated from FASTA formatted DNA/protein sequence files. 
-Users have to prepare a database file in FASTA format and convert it into GHOSTZ format database files by using GHOSTZ "db" command at first. GHOSTZ"db" command requires 2 args ([-i dbFastaFile] and [-o dbName]). GHOSTZ "db" command divides a database FASTA file into several database chunks and generates several files (.inf, .ind, .nam, .pos, .seq). All generated files are needed for the search. Users can specify the size of each chunk. Smaller chunk size requires smaller memory, but efficiency of the search will decrease. 
-For executing homology search, GHOSTZ "aln" command is used and that command requires at least 2 args([-i qryName] and [-d dbName]).
+- Users have to prepare a database file in FASTA format and convert it into GHOSTZ format database files by using `ghostz db` command at first.
+  - `ghostz db` command requires 2 args ([-i dbFastaFile] and [-o dbName]).
+  - `ghostz db` command divides a database FASTA file into several database chunks and generates several files (.inf, .ind, .nam, .pos, .seq).
+  - All generated files are needed for the search. Users can specify the size of each chunk. Smaller chunk size requires smaller memory, but efficiency of the search will decrease. 
+- For executing homology search, `ghostz aln` command is used and that command requires at least 2 args(`[-i qryName]` and `[-d dbName]`).
 
-Example
--------
+## Example
+```
 $ ghostz db  -i ./db.fasta -o exdb
-
 $ ghostz aln -i exqry -d exdb -o exout
+```
 
-Command and Options
--------------------
-db: convert a FASTA file to GHOSTX format database files
+## Command and Options
 
-  ghostz db [-i dbFastaFile] [-o dbName] [-C clustering][-l chunkSize]
+`ghostz db`: convert a FASTA file to GHOSTX format database files
+```
+ghostz db [-i dbFastaFile] [-o dbName] [-C clustering][-l chunkSize]
             [-L clusteringSubsequenceLength]  [-s seedThreshold]
 
   Options:
@@ -49,11 +52,11 @@ db: convert a FASTA file to GHOSTX format database files
     -l INT    Chunk size of the database (bytes) [1073741824 (=1GB)]
     -L INT    Length of a subsequence for clustering [10]
     -s INT    The seed threshold [39]
+```
 
-
-aln:  Search homologues of queries from database
-
-  ghostz aln [-i queries] [-o output] [-d database] [-v maxNumAliSub]
+`ghostz aln`:  Search homologues of queries from database
+```
+ghostz aln [-i queries] [-o output] [-d database] [-v maxNumAliSub]
              [-b maxNumAliQue] [-h hitsSize] [-l queriesChunkSize] [-q queryType]
              [-t databaseType] [-F filter] [-a numThreads]
 
@@ -72,10 +75,11 @@ aln:  Search homologues of queries from database
     -t STR    Database sequence type, p (protein) or d (dna) [p]
     -F STR    Filter query sequence, T (enable) or F (disable) [T] 
     -a INT    The number of threads [1]
-Search results
---------------
-GHOSTZ outputs the tab-deliminated file as search results.
+```
 
+## Search results
+GHOSTZ outputs the tab-deliminated file as search results.
+```
 Example)
   hsa:124045...   hsa:124045...   100       139     0       0       1       139     1       139     2.04391e-76     283.878
   hsa:124045...   ptr:454320...   99.2126        127     1       0       13      139     14      140     5.96068e-68     255.758
@@ -87,6 +91,7 @@ Example)
   hsa:124045...   aml:100464...   26.6667        75      46      2       13      81      1183    1254    0.820692        32.7278
   hsa:124045...   bfo:BRAFLD...   56    25      10      1       108     131     581     605     0.820692        32.7278
   hsa:124045...   tgu:100227...   26.1682        107     69      3       25      130     150     247     1.82831 31.5722
+```
 
 Each column shows;
 1.  Name of a query sequence
@@ -102,5 +107,6 @@ Each column shows;
 11. E-value
 12. Normalized score
 
+----
 Copyright © 2014 Akiyama_Laboratory , Tokyo Institute of Technology , All Rights Reserved.  
 
