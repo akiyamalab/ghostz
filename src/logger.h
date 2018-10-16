@@ -22,17 +22,17 @@ public:
 
   void ErrorLog(std::string message) {
 //#pragma omp critical(lock_)
-    std::cout << "error : " << message << std::endl;
+    std::cerr << "error : " << message << std::endl;
   }
 
   void WarningLog(std::string message) {
 //#pragma omp critical(lock_)
-    std::cout << "warning : " << message << std::endl;
+    std::cerr << "warning : " << message << std::endl;
   }
 
   void Log(std::string message) {
 //#pragma omp critical(lock_)
-    std::cout << message << std::endl;
+    std::cerr << message << std::endl;
   }
 
 private:
